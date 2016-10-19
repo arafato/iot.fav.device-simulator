@@ -13,7 +13,7 @@ public class App {
 
     public static void main(String[] args) throws IOException, URISyntaxException, Exception {
         System.out.println("Registering devices...");
-        DeviceRegistry.instance();
+        System.out.println(DeviceRegistry.instance().getAuthKey("Device-42"));
         System.out.println("Devices registered!");
     }
 }

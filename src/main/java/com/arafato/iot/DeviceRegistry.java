@@ -52,12 +52,13 @@ public class DeviceRegistry {
     private void initDevices(int n) throws Exception {
         RegistryManager registryManager = RegistryManager.createFromConnectionString(CONNECTION_STRING);
         for(int i = 1; i <= n; ++i) {
-            Device device = Device.createFromId(String.format(DEVICE_ID, i), null, null);
+            String deviceId = String.format(DEVICE_ID, i);
+            Device device = Device.createFromId(deviceId, null, null);
             try {
                 device = registryManager.addDevice(device);
             } catch (IotHubException iote) {
                 try {
-                    device = registryManager.getDevice(DEVICE_ID);
+                    device = registryManager.getDevice(deviceId);
                 } catch (IotHubException iotf) {
                     iotf.printStackTrace();
                     throw iotf;
