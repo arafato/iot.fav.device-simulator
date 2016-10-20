@@ -17,6 +17,12 @@ public class App {
             System.exit(1);
         }
         int numberOfDevices = Integer.parseInt(args[0]);
+        registerDevices(numberOfDevices);
+
+
+    }
+
+    private static void registerDevices(int numberOfDevices) throws Exception {
         System.out.println(String.format("Registering %1d devices... ", numberOfDevices));
         DeviceRegistry.instance().initDevices(numberOfDevices);
         System.out.println(String.format("Successfully registered all devices... ", numberOfDevices));
