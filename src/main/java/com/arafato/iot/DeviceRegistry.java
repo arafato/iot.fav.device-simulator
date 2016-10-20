@@ -9,7 +9,6 @@ import java.net.URISyntaxException;
 import java.util.*;
 
 public class DeviceRegistry {
-    private static final String CONNECTION_STRING = "HostName=arafato-iothub.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=oqAl5nl3FiacSAXYJnzvgj78zbtxE/+wD4dBizs4908=";
     private static final String DEVICE_ID = "Device-%1$d";
     private static DeviceRegistry _instance;
 
@@ -43,12 +42,12 @@ public class DeviceRegistry {
         throw new NoSuchElementException(deviceId);
     }
 
-    public List<String> getDeviceIds() {
-        return new ArrayList(this.registry.keySet());
+    public List<String> getDeviceIds(int numberOfDevices) {
+        return new ArrayList(this.registry.keySet()).subList(0, numberOfDevices);
     }
 
     public void initDevices(int n) throws Exception {
-        RegistryManager registryManager = RegistryManager.createFromConnectionString(CONNECTION_STRING);
+        RegistryManager registryManager = RegistryManager.createFromConnectionString(Config.IOT_HUB_CONNECTION_STRING);
         for(int i = 1; i <= n; ++i) {
             String deviceId = String.format(DEVICE_ID, i);
             Device device = Device.createFromId(deviceId, null, null);
