@@ -11,14 +11,12 @@ import java.util.*;
 public class DeviceRegistry {
     private static final String CONNECTION_STRING = "HostName=arafato-iothub.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=oqAl5nl3FiacSAXYJnzvgj78zbtxE/+wD4dBizs4908=";
     private static final String DEVICE_ID = "Device-%1$d";
-    private static final int NUMBER_OF_DEVICES = 100;
     private static DeviceRegistry _instance;
 
     private Map<String, Device> registry;
 
     private DeviceRegistry() throws Exception {
         this.registry = new HashMap<String, Device>();
-        this.initDevices(NUMBER_OF_DEVICES);
     }
 
     static {
@@ -49,7 +47,7 @@ public class DeviceRegistry {
         return new ArrayList(this.registry.keySet());
     }
 
-    private void initDevices(int n) throws Exception {
+    public void initDevices(int n) throws Exception {
         RegistryManager registryManager = RegistryManager.createFromConnectionString(CONNECTION_STRING);
         for(int i = 1; i <= n; ++i) {
             String deviceId = String.format(DEVICE_ID, i);

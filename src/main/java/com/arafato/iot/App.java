@@ -12,8 +12,13 @@ import java.net.URISyntaxException;
 public class App {
 
     public static void main(String[] args) throws IOException, URISyntaxException, Exception {
-        System.out.println("Registering devices...");
-        System.out.println(DeviceRegistry.instance().getAuthKey("Device-42"));
-        System.out.println("Devices registered!");
+        if (args.length < 1) {
+            System.out.println("Please supply the number of simulated devices.");
+            System.exit(1);
+        }
+        int numberOfDevices = Integer.parseInt(args[0]);
+        System.out.println(String.format("Registering %1d devices... ", numberOfDevices));
+        DeviceRegistry.instance().initDevices(numberOfDevices);
+        System.out.println(String.format("Successfully registered all devices... ", numberOfDevices));
     }
 }
