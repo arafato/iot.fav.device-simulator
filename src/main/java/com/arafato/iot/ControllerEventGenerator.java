@@ -18,7 +18,6 @@ public class ControllerEventGenerator {
             "aa:aa:aa:aa:aa:aa", "bb:bb:bb:bb:bb:bb", "cc:cc:cc:cc:cc:cc", "dd:dd:dd:dd:dd:dd", "ee:ee:ee:ee:ee:ee");
         this.gson = new Gson();
         this.random = new Random();
-        this.random.setSeed(new Date().getTime());
     }
 
     public String generateEventMessage(int numOfCustomers) {

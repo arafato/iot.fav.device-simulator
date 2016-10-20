@@ -27,7 +27,7 @@ public class DeviceEmulator {
         this.protocol = protocol;
     }
 
-    public void addBeaconController(String deviceId, String authKey) throws URISyntaxException {
+    public void addBeaconController(String deviceId, String authKey) throws URISyntaxException, IOException {
     	this.senders.add(new BeaconControllerSender(deviceId, authKey, this.protocol));
     }
     
@@ -45,20 +45,33 @@ public class DeviceEmulator {
     }
 
 
+    private static class EventCallback implements IotHubEventCallback {
+        public void execute(IotHubStatusCode status, Object context) {
+            // System.out.println("IoT Hub responded to message with status: " + status.name());
+        }
+    }
+    
     private static class BeaconControllerSender implements Runnable {
         private String connString = "HostName=%1s;DeviceId=%2s;SharedAccessKey=%3s";
         private DeviceClient client;
         private ControllerEventGenerator messageGenerator;
-
+        private String deviceId;
+        private String authKey;
+        
         public volatile boolean stopThread = false;
         
-        public BeaconControllerSender(String deviceId, String authKey, IotHubClientProtocol protocol) throws URISyntaxException {
+        public BeaconControllerSender(String deviceId, String authKey, IotHubClientProtocol protocol) throws URISyntaxException, IOException {
+        	this.deviceId = deviceId;
+        	this.authKey = authKey;
             this.connString = String.format(this.connString, Config.IOT_HUB_ENDPOINT, deviceId, authKey);
             this.client = new DeviceClient(this.connString, protocol);
+            this.client.open();
             this.messageGenerator = new ControllerEventGenerator(deviceId);
         }
 
         public void shutdown() throws IOException {
+        	System.out.println("Closing " + this.deviceId);
+        	this.stopThread = true;
         	this.client.close();
         }
         
@@ -66,8 +79,12 @@ public class DeviceEmulator {
         	try {
         		while(!stopThread) {
             		String msgJson = messageGenerator.generateRandomEventMessage();
+            		
+            		System.out.println(deviceId + " sending:");
+            		System.out.println(msgJson);
+            		
             		Message msg = new Message(msgJson); 
-            		this.client.sendEventAsync(msg, null, null);
+            		this.client.sendEventAsync(msg, new EventCallback(), null);
             		Thread.sleep(5000);
             	}	
         	} catch (InterruptedException e) {

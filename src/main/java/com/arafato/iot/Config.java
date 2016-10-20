@@ -7,9 +7,9 @@ public class Config {
 	public static void init(String connectionString) throws IllegalArgumentException {
 		IOT_HUB_CONNECTION_STRING = connectionString;
 		
-		IOT_HUB_ENDPOINT = getToken("HostName=(.*?)", IOT_HUB_ENDPOINT);
-		IOT_HUB_SHARED_ACCESS_KEY_NAME = getToken("SharedAccessKeyName=(.*?)", IOT_HUB_ENDPOINT);
-		IOT_HUB_SHARED_ACCESS_KEY = getToken("SharedAccessKey=(.*?)", IOT_HUB_ENDPOINT);
+		IOT_HUB_ENDPOINT = getToken("HostName=(.*?);", IOT_HUB_CONNECTION_STRING);
+		IOT_HUB_SHARED_ACCESS_KEY_NAME = getToken("SharedAccessKeyName=(.*?);", IOT_HUB_CONNECTION_STRING);
+		IOT_HUB_SHARED_ACCESS_KEY = getToken("SharedAccessKey=(.*?);", IOT_HUB_CONNECTION_STRING);
 	}
 
 	public static String IOT_HUB_CONNECTION_STRING = "";
@@ -24,7 +24,7 @@ public class Config {
 		{
 		    return matcher.group(1);
 		} else {
-			throw new IllegalArgumentException("missing iot hub endpoint");
+			throw new IllegalArgumentException("missing argument in connection string (HostName, SharedAccessKey, SharedAccessKeyName)");
 		}
 	}
 }

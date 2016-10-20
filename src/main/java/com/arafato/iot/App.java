@@ -1,4 +1,4 @@
-//  mvn exec:java -Dexec.mainClass="com.arafato.iot.App"
+//  mvn exec:java -Dexec.mainClass="com.arafato.iot.App" -Dexec.args="10 HostName=arafato-iothub.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=oqAl5nl3FiacSAXYJnzvgj78zbtxE/+wD4dBizs4908="
 
 package com.arafato.iot;
 
@@ -22,17 +22,19 @@ public class App {
         Config.init(args[1]);        
         registerDevices(numberOfDevices);
         
-        DeviceEmulator emulator = new DeviceEmulator(10, IotHubClientProtocol.MQTT);
+        DeviceEmulator emulator = new DeviceEmulator(numberOfDevices, IotHubClientProtocol.MQTT);
         List<String> deviceIds = DeviceRegistry.instance().getDeviceIds(numberOfDevices);
         for(String deviceId: deviceIds) {
         	emulator.addBeaconController(deviceId, DeviceRegistry.instance().getAuthKey(deviceId));
         }
         
+        System.out.println("Starting simulation...");
         emulator.start();
-        
+        System.out.println("Hit <Enter> to stop simulation and exits.");
         System.in.read();
-        
+        System.out.println("Stopping simulation...");
         emulator.stop();
+        System.out.println("Simulation stopped... have a good one!");
     }
 
     private static void registerDevices(int numberOfDevices) throws Exception {
