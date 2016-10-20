@@ -77,6 +77,14 @@ public class DeviceEmulator {
         
         public void run() {
         	try {
+        		// Spreading the initial startups of individual senders by [500;5000]ms
+	        	Random rand = new Random();
+	        	Thread.sleep(rand.nextInt(4500) + 500);
+        	}
+        	catch(InterruptedException e) {
+        		System.err.println("Interrupted during initial startup: " + e.getMessage());
+        	}
+        	try {
         		while(!stopThread) {
             		String msgJson = messageGenerator.generateRandomEventMessage();
             		

@@ -12,7 +12,7 @@ public class ControllerEventGenerator {
 
     public ControllerEventGenerator(String beaconControllerId) {
         this.beaconControllerId = beaconControllerId;
-        this. customerWifiMacs = Arrays.asList(
+        this.customerWifiMacs = Arrays.asList(
             "11:11:11:11:11:11", "22:22:22:22:22:22", "33:33:33:33:33:33", "44:44:44:44:44:44", "55:55:55:55:55:55",
             "66:66:66:66:66:66", "77:77:77:77:77:77", "88:88:88:88:88:88", "99:99:99:99:99:99", "10:10:10:10:10:10",
             "aa:aa:aa:aa:aa:aa", "bb:bb:bb:bb:bb:bb", "cc:cc:cc:cc:cc:cc", "dd:dd:dd:dd:dd:dd", "ee:ee:ee:ee:ee:ee");
