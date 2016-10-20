@@ -2,10 +2,10 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.mycompany.app</groupId>
-  <artifactId>create-device-identity</artifactId>
+  <artifactId>device-simulator</artifactId>
   <packaging>jar</packaging>
   <version>1.0-SNAPSHOT</version>
-  <name>create-device-identity</name>
+  <name>device-simulator</name>
   <url>http://maven.apache.org</url>
   <dependencies>
     <dependency>
