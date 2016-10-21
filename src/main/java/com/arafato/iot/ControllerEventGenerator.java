@@ -47,7 +47,7 @@ public class ControllerEventGenerator {
     }    
 
     private long getRandomizedTimestamp(long now) {
-        return now + (this.random.nextInt(4000) - 2000);
+        return (now + (this.random.nextInt(4000) - 2000)) / 1000;
     }
 
     private List<String> getRandomWifiMacs(int numOfCustomers) {
